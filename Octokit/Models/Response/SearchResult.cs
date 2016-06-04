@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace Octokit.Internal
 {
-    public abstract class SearchResult<T>
+    public abstract class SearchResult<T> : IRateLimit
     {
         protected SearchResult() { }
 
@@ -36,5 +37,7 @@ namespace Octokit.Internal
                 return string.Format(CultureInfo.InvariantCulture, "TotalCount: {0}", TotalCount);
             }
         }
+
+        public RateLimit RateLimit { get; set; }
     }
 }

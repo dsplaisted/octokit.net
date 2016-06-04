@@ -37,6 +37,7 @@ namespace Octokit
             Base64Encoded = memberInfo.GetCustomAttribute<SerializeAsBase64Attribute>() != null;
             SerializeNull = memberInfo.GetCustomAttribute<SerializeNullAttribute>() != null;
             HasParameterAttribute = memberInfo.GetCustomAttribute<ParameterAttribute>() != null;
+            HasJsonIgnoreAttribute = memberInfo.GetCustomAttribute<JsonIgnoreAttribute>() != null;
         }
 
         public bool CanRead { get; private set; }
@@ -52,6 +53,8 @@ namespace Octokit
         public bool IsPublic { get; private set; }
 
         public bool HasParameterAttribute { get; private set; }
+
+        public bool HasJsonIgnoreAttribute { get; private set; }
 
         public MemberInfo MemberInfo { get; private set; }
 
@@ -173,13 +176,14 @@ namespace Octokit
                 return (IsPublic || HasParameterAttribute)
                     && !IsStatic
                     && CanWrite
+                    && !HasJsonIgnoreAttribute
                     && (_fieldInfo == null || !_fieldInfo.IsInitOnly);
             }
         }
 
         public bool CanSerialize
         {
-            get { return IsPublic && CanRead && !IsStatic; }
+            get { return IsPublic && CanRead && !IsStatic && !HasJsonIgnoreAttribute; }
         }
     }
 }

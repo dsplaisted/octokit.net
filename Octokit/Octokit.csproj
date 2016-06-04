@@ -110,6 +110,7 @@
     <Compile Include="Helpers\ConcurrentCache.cs" />
     <Compile Include="Helpers\HttpClientExtensions.cs" />
     <Compile Include="Helpers\Pagination.cs" />
+    <Compile Include="Helpers\JsonIgnoreAttribute.cs" />
     <Compile Include="Helpers\PropertyOrField.cs" />
     <Compile Include="Helpers\ReferenceExtensions.cs" />
     <Compile Include="Helpers\SerializeNullAttribute.cs" />

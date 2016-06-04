@@ -57,6 +57,17 @@ namespace Octokit
             return Get<T>(uri, null);
         }
 
+        private static T ApplyApiInfo<T>(IApiResponse<T> response)
+        {
+            var responseRateLimit = response.Body as IRateLimit;
+            if (responseRateLimit != null)
+            {
+                responseRateLimit.RateLimit = response.HttpResponse.ApiInfo.RateLimit;
+            }
+            return response.Body;
+        }
+
+
         /// <summary>
         /// Gets the API resource at the specified URI.
         /// </summary>
@@ -70,7 +81,8 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             var response = await Connection.Get<T>(uri, parameters, null).ConfigureAwait(false);
-            return response.Body;
+
+            return ApplyApiInfo(response);
         }
 
         /// <summary>
@@ -88,7 +100,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(accepts, "accepts");
 
             var response = await Connection.Get<T>(uri, parameters, accepts).ConfigureAwait(false);
-            return response.Body;
+            return ApplyApiInfo(response);
         }
 
         /// <summary>
@@ -103,7 +115,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             var response = await Connection.GetHtml(uri, parameters).ConfigureAwait(false);
-            return response.Body;
+            return ApplyApiInfo(response);
         }
 
         /// <summary>
@@ -209,7 +221,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, "uri");
 
             var response = await Connection.Post<T>(uri).ConfigureAwait(false);
-            return response.Body;
+            return ApplyApiInfo(response);
         }
 
         /// <summary>
@@ -258,7 +270,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var response = await Connection.Post<T>(uri, data, accepts, contentType).ConfigureAwait(false);
-            return response.Body;
+            return ApplyApiInfo(response);
         }
 
         /// <summary>
@@ -279,7 +291,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(twoFactorAuthenticationCode, "twoFactorAuthenticationCode");
 
             var response = await Connection.Post<T>(uri, data, accepts, contentType, twoFactorAuthenticationCode).ConfigureAwait(false);
-            return response.Body;
+            return ApplyApiInfo(response);
         }
 
 
@@ -289,7 +301,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(data, "data");
 
             var response = await Connection.Post<T>(uri, data, accepts, contentType, timeout).ConfigureAwait(false);
-            return response.Body;
+            return ApplyApiInfo(response);
         }
 
         /// <summary>
@@ -319,7 +331,7 @@ namespace Octokit
 
             var response = await Connection.Put<T>(uri, data).ConfigureAwait(false);
 
-            return response.Body;
+            return ApplyApiInfo(response);
         }
 
         /// <summary>
@@ -339,7 +351,7 @@ namespace Octokit
 
             var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode).ConfigureAwait(false);
 
-            return response.Body;
+            return ApplyApiInfo(response);
         }
 
         /// <summary>
@@ -359,7 +371,7 @@ namespace Octokit
 
             var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode, accepts).ConfigureAwait(false);
 
-            return response.Body;
+            return ApplyApiInfo(response);
         }
 
         /// <summary>
@@ -389,7 +401,7 @@ namespace Octokit
 
             var response = await Connection.Patch<T>(uri, data).ConfigureAwait(false);
 
-            return response.Body;
+            return ApplyApiInfo(response);
         }
 
         /// <summary>
@@ -409,7 +421,7 @@ namespace Octokit
 
             var response = await Connection.Patch<T>(uri, data, accepts).ConfigureAwait(false);
 
-            return response.Body;
+            return ApplyApiInfo(response);
         }
 
         /// <summary>

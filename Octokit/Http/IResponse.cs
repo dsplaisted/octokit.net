@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Octokit.Internal;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Octokit
@@ -48,5 +49,11 @@ namespace Octokit
         /// The content type of the response.
         /// </summary>
         string ContentType { get; }
+    }
+
+    public interface IRateLimit
+    {
+        [JsonIgnore]
+        RateLimit RateLimit { get; set; }
     }
 }
