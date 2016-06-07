@@ -17,6 +17,16 @@ namespace Octokit
         {
         }
 
+        public Task<RepositoryContent> GetFileContents(string owner, string name, string path)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, "owner");
+            Ensure.ArgumentNotNullOrEmptyString(name, "name");
+
+            var url = ApiUrls.RepositoryContent(owner, name, path);
+
+            return ApiConnection.Get<RepositoryContent>(url);
+        }
+
         /// <summary>
         /// Returns the contents of a file or directory in a repository.
         /// </summary>

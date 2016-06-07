@@ -9,7 +9,7 @@ namespace Octokit
     /// Look at the Type property to figure out which one it is.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RepositoryContent : RepositoryContentInfo
+    public class RepositoryContent : RepositoryContentInfo, IRateLimit
     {
         public RepositoryContent() { }
 
@@ -55,5 +55,7 @@ namespace Octokit
         /// The location of the submodule repository if this is a submodule. Otherwise it's null.
         /// </summary>
         public Uri SubmoduleGitUrl { get; protected set; }
+
+        public RateLimit RateLimit { get; set; }
     }
 }

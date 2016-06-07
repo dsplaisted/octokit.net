@@ -10,6 +10,8 @@ namespace Octokit
     /// </summary>
     public interface IRepositoryContentsClient
     {
+        Task<RepositoryContent> GetFileContents(string owner, string name, string path);
+
         /// <summary>
         /// Returns the contents of a file or directory in a repository.
         /// </summary>
