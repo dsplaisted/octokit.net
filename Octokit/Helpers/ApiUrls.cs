@@ -1674,6 +1674,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
         public static Uri RepositoryContent(string owner, string name, string path)
         {
+            path = Uri.EscapeDataString(path);
             return "repos/{0}/{1}/contents/{2}".FormatUri(owner, name, path);
         }
 

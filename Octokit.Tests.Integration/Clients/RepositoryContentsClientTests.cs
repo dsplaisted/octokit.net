@@ -53,6 +53,21 @@ namespace Octokit.Tests.Integration.Clients
             }
 
             [IntegrationTest]
+            public async Task GetsFileContentWithPoundSign()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContents("Microsoft", "VSSDK-Extensibility-Samples", "Code_Sweep/C#/VsPackage/project.json");
+
+                Assert.Equal(1, contents.Count);
+                Assert.Equal(ContentType.File, contents.First().Type);
+                //Assert.Equal(new Uri("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs"), contents.First().HtmlUrl);
+            }
+
+            [IntegrationTest]
             public async Task GetsDirectoryContent()
             {
                 var github = Helper.GetAuthenticatedClient();
