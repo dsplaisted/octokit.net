@@ -5,7 +5,7 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class Repository
+    public class Repository : IRateLimit
     {
         public Repository() { }
 
@@ -113,5 +113,7 @@ namespace Octokit
                     "Repository: Id: {0} Owner: {1}, Name: {2}", Id, Owner, Name);
             }
         }
+
+        public RateLimit RateLimit { get; set; }
     }
 }
