@@ -72,6 +72,27 @@ public class SearchClientTests
     }
 
     [IntegrationTest]
+    public async Task SearchForFileNameInCodeWithoutTerm2()
+    {
+        var request = new SearchCodeRequest()
+        {
+            FileName = "project.json",
+            Repos = new RepositoryCollection { "adamcaudill/Psychson" }
+        };
+
+        try
+        {
+            var repos = await _gitHubClient.Search.SearchCode(request);
+
+            Assert.Empty(repos.Items);
+        }
+        catch (ApiValidationException ex)
+        {
+
+        }
+    }
+
+    [IntegrationTest]
     public async Task SearchForWordInCode()
     {
         var request = new SearchIssuesRequest("windows");

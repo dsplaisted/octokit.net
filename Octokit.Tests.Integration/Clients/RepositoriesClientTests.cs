@@ -490,6 +490,19 @@ public class RepositoriesClientTests
             Assert.Equal("https://github.com/Haacked/libgit2sharp.git", repository.CloneUrl);
             Assert.True(repository.Fork);
         }
+
+        [IntegrationTest]
+        public async Task ReturnsRenamedRepository()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repository = await github.Repository.Get("michael-wolfenden", "Polly");
+
+            Assert.Equal("https://github.com/App-vNext/Polly.git", repository.CloneUrl);
+            Assert.False(repository.Private);
+            Assert.False(repository.Fork);
+            //Assert.Equal(AccountType.User, repository.Owner.Type);
+        }
     }
 
     public class TheGetAllPublicMethod
