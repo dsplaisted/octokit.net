@@ -80,16 +80,22 @@ public class SearchClientTests
             Repos = new RepositoryCollection { "adamcaudill/Psychson" }
         };
 
-        try
-        {
-            var repos = await _gitHubClient.Search.SearchCode(request);
 
-            Assert.Empty(repos.Items);
-        }
-        catch (ApiValidationException ex)
-        {
+        var repos = await _gitHubClient.Search.SearchCode(request);
 
-        }
+        Assert.Empty(repos.Items);
+    }
+
+    [IntegrationTest]
+    public async Task SearchForFileNameInCodeWithoutTermWithUnderscore()
+    {
+        var request = new SearchCodeRequest()
+        {
+            FileName = "readme.md",
+            Repos = new RepositoryCollection { "Cultural-Rogue/_51Wp.XinFengSDK.Demo" }
+        };
+
+        var repos = await _gitHubClient.Search.SearchCode(request);
     }
 
     [IntegrationTest]
